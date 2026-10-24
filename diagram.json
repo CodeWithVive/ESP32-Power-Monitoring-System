@@ -1,43 +1,38 @@
-
-const int ledPin = 2;
-
-float voltage = 230.0;
-float current = 0.5;
-const float overloadLimit = 150.0;
-
-void setup() {
-  Serial.begin(115200);
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
-
-  Serial.println("ESP32 Power Monitoring System");
-}
-
-void loop() {
-  float power = voltage * current;
-
-  Serial.println("--------------------");
-
-  Serial.print("Voltage: ");
-  Serial.print(voltage, 2);
-  Serial.println(" V");
-
-  Serial.print("Current: ");
-  Serial.print(current, 2);
-  Serial.println(" A");
-
-  Serial.print("Power: ");
-  Serial.print(power, 2);
-  Serial.println(" W");
-
-  if (power > overloadLimit) {
-    digitalWrite(ledPin, HIGH);
-    Serial.println("ALERT: OVERLOAD DETECTED!");
-    Serial.println("Status: OVERLOAD");
-  } else {
-    digitalWrite(ledPin, LOW);
-    Serial.println("Status: NORMAL");
-  }
-
-  delay(2000);
+{
+  "version": 1,
+  "author": "Vivek Sharma",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 150,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -30,
+      "left": 150,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    ["esp:2", "led1:A", "green", []],
+    ["led1:C", "r1:1", "green", []],
+    ["r1:2", "esp:GND.1", "black", []]
+  ],
+  "dependencies": {}
 }
